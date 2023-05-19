@@ -16,7 +16,7 @@ class AddBudgetCategoryViewController: UIViewController {
     private var persistentContainer: NSPersistentContainer
     
     lazy var nameTextField: UITextField = {
-       let textField = UITextField()
+        let textField = UITextField()
         textField.placeholder = "Budget name"
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         textField.leftViewMode = .always
@@ -25,7 +25,7 @@ class AddBudgetCategoryViewController: UIViewController {
     }()
     
     lazy var amountTextField: UITextField = {
-       let amountTextField = UITextField()
+        let amountTextField = UITextField()
         amountTextField.placeholder = "Budget amount"
         amountTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         amountTextField.leftViewMode = .always
@@ -80,7 +80,7 @@ class AddBudgetCategoryViewController: UIViewController {
     }
     
     private func layout() {
- 
+        
         stackView.addArrangedSubview(nameTextField)
         stackView.addArrangedSubview(amountTextField)
         stackView.addArrangedSubview(addBudgetButton)
@@ -108,9 +108,27 @@ class AddBudgetCategoryViewController: UIViewController {
         
         return !name.isEmpty && !amount.isEmpty && amount.isNumeric && amount.isGreatorThan(0)
     }
+    
+    
+    private func saveBugetCategory() {
+        guard let name = nameTextField.text, let amount = amountTextField.text else { return }
+        
+        do {
+            let budgetCategory = BudgetCategory(context: persistentContainer.viewContext)
+            budgetCategory.name = name
+            budgetCategory.amount = Double(amount) ?? 0
+            try persistentContainer.viewContext.save()
+            // dismiss the modal
+            dismiss(animated: true)
+        } catch {
+            errorMessageLabel.text = "Unable to save budget category"
+        }
+    }
+    
     @objc func addBudgetButtonPressed(_ sender: UIButton) {
         if isFormValid {
             // save budget category
+            saveBugetCategory()
         } else {
             errorMessageLabel.text = "Unable to save budget. Budget name and amount is required"
         }
