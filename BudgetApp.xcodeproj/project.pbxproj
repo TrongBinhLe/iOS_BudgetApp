@@ -14,6 +14,7 @@
 		84A0AC952A15D6BF001100CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A0AC932A15D6BF001100CB /* LaunchScreen.storyboard */; };
 		84A0AC9E2A15D8E1001100CB /* BudgetModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84A0AC9C2A15D8E1001100CB /* BudgetModel.xcdatamodeld */; };
 		84A0ACA02A163188001100CB /* AddBudgetCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0AC9F2A163188001100CB /* AddBudgetCategoryViewController.swift */; };
+		84A0ACA32A171CEA001100CB /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0ACA22A171CEA001100CB /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		84A0AC962A15D6BF001100CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84A0AC9D2A15D8E1001100CB /* BudgetModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BudgetModel.xcdatamodel; sourceTree = "<group>"; };
 		84A0AC9F2A163188001100CB /* AddBudgetCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBudgetCategoryViewController.swift; sourceTree = "<group>"; };
+		84A0ACA22A171CEA001100CB /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		84A0AC872A15D6BD001100CB /* BudgetApp */ = {
 			isa = PBXGroup;
 			children = (
+				84A0ACA12A171CBB001100CB /* Extensions */,
 				84A0AC882A15D6BD001100CB /* AppDelegate.swift */,
 				84A0AC8A2A15D6BD001100CB /* SceneDelegate.swift */,
 				84A0AC8C2A15D6BD001100CB /* BudgetCategoriesTableViewController.swift */,
@@ -68,6 +71,14 @@
 				84A0AC9C2A15D8E1001100CB /* BudgetModel.xcdatamodeld */,
 			);
 			path = BudgetApp;
+			sourceTree = "<group>";
+		};
+		84A0ACA12A171CBB001100CB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				84A0ACA22A171CEA001100CB /* String+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,6 +155,7 @@
 				84A0AC8D2A15D6BD001100CB /* BudgetCategoriesTableViewController.swift in Sources */,
 				84A0AC892A15D6BD001100CB /* AppDelegate.swift in Sources */,
 				84A0ACA02A163188001100CB /* AddBudgetCategoryViewController.swift in Sources */,
+				84A0ACA32A171CEA001100CB /* String+Extensions.swift in Sources */,
 				84A0AC8B2A15D6BD001100CB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
