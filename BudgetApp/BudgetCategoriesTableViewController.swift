@@ -8,13 +8,26 @@
 import UIKit
 import CoreData
 
-class BudgetCategoriesTableViewController: UIViewController {
+class BudgetCategoriesTableViewController: UITableViewController {
     
     private var persistentContainer: NSPersistentContainer
+    private var fetchResultsController: NSFetchedResultsController<BudgetCategory>!
     
     init(persistentContainer: NSPersistentContainer) {
         self.persistentContainer = persistentContainer
         super.init(nibName: nil, bundle: nil)
+        
+        let request = BudgetCategory.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
+        fetchResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchResultsController.delegate = self
+        
+        do {
+            try fetchResultsController.performFetch()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -27,11 +40,19 @@ class BudgetCategoriesTableViewController: UIViewController {
         
         setupUI()
         
+        //register cell
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "BudgetTableViewCell")
+        
     }
     
     private func setupUI() {
         style()
         layout()
+    }
+    
+    @objc func showAddBudgetCategoty(_ sender: UIButton) {
+        let navController = UINavigationController(rootViewController: AddBudgetCategoryViewController(persistentContainer: persistentContainer))
+        present(navController, animated: true)
     }
     
     private func style() {
@@ -47,12 +68,27 @@ class BudgetCategoriesTableViewController: UIViewController {
     private func layout() {
         
     }
-    
-    @objc func showAddBudgetCategoty(_ sender: UIButton) {
-        let navController = UINavigationController(rootViewController: AddBudgetCategoryViewController(persistentContainer: persistentContainer))
-        present(navController, animated: true)
+        
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (fetchResultsController.fetchedObjects ?? []).count
     }
-
-
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BudgetTableViewCell", for: indexPath)
+        
+        let budgetCategory = fetchResultsController.object(at: indexPath)
+        var configuration = cell.defaultContentConfiguration()
+        configuration.text = budgetCategory.name
+        cell.contentConfiguration = configuration
+        
+        return cell
+    }
 }
 
+
+
+extension BudgetCategoriesTableViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.reloadData()
+    }
+}
