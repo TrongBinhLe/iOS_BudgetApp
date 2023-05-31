@@ -13,6 +13,7 @@ class BudgetDetailsViewController: UIViewController {
     
     private var persistentContainer: NSPersistentContainer
     private var budgetCategory: BudgetCategory
+    private var fetchResultsController: NSFetchedResultsController<Transaction>!
     
     let stackView = UIStackView()
     
@@ -76,6 +77,20 @@ class BudgetDetailsViewController: UIViewController {
         self.persistentContainer = persistentContainer
         
         super.init(nibName: nil, bundle: nil)
+        
+        // create request based on selected budget category
+        let request = Transaction.fetchRequest()
+        request.predicate = NSPredicate(format: "category = %@", budgetCategory)
+        request.sortDescriptors = [NSSortDescriptor(key: "dateCreated", ascending: false)]
+        
+        fetchResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchResultsController.delegate = self
+        
+        do {
+           try fetchResultsController.performFetch()
+        } catch {
+            errorMessageLabel.text = "Unable to fetch transactions."
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -163,11 +178,19 @@ class BudgetDetailsViewController: UIViewController {
 
 extension BudgetDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return (fetchResultsController.fetchedObjects ?? []).count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionTableViewCell", for: indexPath)
+        
+        let transaction = fetchResultsController.object(at: indexPath)
+        // cell configuration
+        var content = cell.defaultContentConfiguration()
+        content.text = transaction.name
+        content.secondaryText = transaction.amount.formatAsCurrency()
+        cell.contentConfiguration = content
+        
         return cell
     }
     
@@ -176,6 +199,12 @@ extension BudgetDetailsViewController: UITableViewDataSource {
 
 extension BudgetDetailsViewController: UITableViewDelegate {
     
+}
+
+extension BudgetDetailsViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.reloadData()
+    }
 }
 
 // MARK: Action
