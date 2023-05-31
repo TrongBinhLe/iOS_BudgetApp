@@ -72,6 +72,12 @@ class BudgetDetailsViewController: UIViewController {
         return label
     }()
     
+    lazy var transactionsTotalLabel: UILabel = {
+       let label = UILabel()
+        label.textAlignment = .center
+        return label
+    }()
+    
     init(budgetCategory: BudgetCategory, persistentContainer: NSPersistentContainer) {
         self.budgetCategory = budgetCategory
         self.persistentContainer = persistentContainer
@@ -101,6 +107,7 @@ class BudgetDetailsViewController: UIViewController {
         super.viewDidLoad()
         style()
         layout()
+        updateTransactionTotal()
     }
     
     private func style() {
@@ -130,6 +137,7 @@ class BudgetDetailsViewController: UIViewController {
         stackView.addArrangedSubview(amountTextField)
         stackView.addArrangedSubview(saveTransactionButton)
         stackView.addArrangedSubview(errorMessageLabel)
+        stackView.addArrangedSubview(transactionsTotalLabel)
         stackView.addArrangedSubview(tableView)
         
         view.addSubview(stackView)
@@ -142,12 +150,28 @@ class BudgetDetailsViewController: UIViewController {
         tableView.heightAnchor.constraint(equalToConstant: 600).isActive = true
         
     }
+    private var transactionTotal: Double {
+        let transactions = fetchResultsController.fetchedObjects ?? []
+        return transactions.reduce(0) { next, transaction in
+            next + transaction.amount
+        }
+    }
+    
+    private func updateTransactionTotal() {
+        transactionsTotalLabel.text = transactionTotal.formatAsCurrency()
+    }
     
     private func isFormValid() -> Bool {
         guard let name = nameTextField.text, let amount = amountTextField.text else {
             return false
         }
         return !name.isEmpty && !amount.isEmpty && amount.isNumeric && amount.isGreatorThan(0)
+    }
+    
+    private func resetForm() {
+        nameTextField.text = ""
+        amountTextField.text = ""
+        errorMessageLabel.text = ""
     }
     
     private func saveTransaction() {
@@ -167,6 +191,8 @@ class BudgetDetailsViewController: UIViewController {
         
         do {
             try persistentContainer.viewContext.save()
+            //reset form
+            resetForm()
             tableView.reloadData()
         } catch {
             errorMessageLabel.text = "Unable to save transaction"
@@ -204,6 +230,7 @@ extension BudgetDetailsViewController: UITableViewDelegate {
 extension BudgetDetailsViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.reloadData()
+        updateTransactionTotal()
     }
 }
 
