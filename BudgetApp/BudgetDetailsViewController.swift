@@ -200,6 +200,15 @@ class BudgetDetailsViewController: UIViewController {
         
     }
     
+    private func deteleteTransaction(_ transaction: Transaction) {
+        persistentContainer.viewContext.delete(transaction)
+        do {
+            try persistentContainer.viewContext.save()
+        } catch {
+            errorMessageLabel.text = "Unable to delete transaction"
+        }
+    }
+    
 }
 
 extension BudgetDetailsViewController: UITableViewDataSource {
@@ -224,7 +233,12 @@ extension BudgetDetailsViewController: UITableViewDataSource {
 }
 
 extension BudgetDetailsViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let transaction = fetchResultsController.object(at: indexPath)
+            deteleteTransaction(transaction)
+        }
+    }
 }
 
 extension BudgetDetailsViewController: NSFetchedResultsControllerDelegate {
