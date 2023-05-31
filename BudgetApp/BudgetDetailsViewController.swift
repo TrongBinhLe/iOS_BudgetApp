@@ -150,15 +150,15 @@ class BudgetDetailsViewController: UIViewController {
         tableView.heightAnchor.constraint(equalToConstant: 600).isActive = true
         
     }
-    private var transactionTotal: Double {
-        let transactions = fetchResultsController.fetchedObjects ?? []
-        return transactions.reduce(0) { next, transaction in
-            next + transaction.amount
-        }
-    }
+//    private var transactionTotal: Double {
+//        let transactions = fetchResultsController.fetchedObjects ?? []
+//        return transactions.reduce(0) { next, transaction in
+//            next + transaction.amount
+//        }
+//    }
     
     private func updateTransactionTotal() {
-        transactionsTotalLabel.text = transactionTotal.formatAsCurrency()
+        transactionsTotalLabel.text = budgetCategory.transactionTotal.formatAsCurrency()
     }
     
     private func isFormValid() -> Bool {
