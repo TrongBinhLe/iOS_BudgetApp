@@ -17,6 +17,7 @@
 		84A0ACA32A171CEA001100CB /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0ACA22A171CEA001100CB /* String+Extensions.swift */; };
 		84A0ACA52A177357001100CB /* BudgetDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0ACA42A177357001100CB /* BudgetDetailsViewController.swift */; };
 		84ED08A02A26E5320041E8C8 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED089F2A26E5320041E8C8 /* Double+Extensions.swift */; };
+		84ED08A42A271ECB0041E8C8 /* BudgetCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED08A32A271ECB0041E8C8 /* BudgetCategoryTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		84A0ACA22A171CEA001100CB /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		84A0ACA42A177357001100CB /* BudgetDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailsViewController.swift; sourceTree = "<group>"; };
 		84ED089F2A26E5320041E8C8 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		84ED08A32A271ECB0041E8C8 /* BudgetCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCategoryTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		84A0AC872A15D6BD001100CB /* BudgetApp */ = {
 			isa = PBXGroup;
 			children = (
+				84ED08A22A271E970041E8C8 /* Cells */,
 				84A0ACA12A171CBB001100CB /* Extensions */,
 				84A0AC882A15D6BD001100CB /* AppDelegate.swift */,
 				84A0AC8A2A15D6BD001100CB /* SceneDelegate.swift */,
@@ -85,6 +88,14 @@
 				84ED089F2A26E5320041E8C8 /* Double+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		84ED08A22A271E970041E8C8 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				84ED08A32A271ECB0041E8C8 /* BudgetCategoryTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +176,7 @@
 				84A0ACA52A177357001100CB /* BudgetDetailsViewController.swift in Sources */,
 				84A0ACA32A171CEA001100CB /* String+Extensions.swift in Sources */,
 				84A0AC8B2A15D6BD001100CB /* SceneDelegate.swift in Sources */,
+				84ED08A42A271ECB0041E8C8 /* BudgetCategoryTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
