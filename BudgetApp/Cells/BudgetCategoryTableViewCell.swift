@@ -42,6 +42,12 @@ class BudgetTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configure(_ budgetCategory: BudgetCategory) {
+        nameLabel.text = budgetCategory.name
+        amountLabel.text = budgetCategory.amount.formatAsCurrency()
+        remainingLabel.text = "Remaining: $50"
+    }
+    
     private func styleUI() {
         
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -54,10 +60,6 @@ class BudgetTableViewCell: UITableViewCell {
         vStackView.alignment = .trailing
         vStackView.addArrangedSubview(amountLabel)
         vStackView.addArrangedSubview(remainingLabel)
-        
-        nameLabel.text = "Food"
-        amountLabel.text = "$250"
-        remainingLabel.text = "$50"
         
     }
     
